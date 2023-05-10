@@ -1,0 +1,9 @@
+name: RivalsProfiles
+version: '0.1'
+main: hu.rivalsnetwork.rivalsprofiles.RivalsProfilesPlugin
+api-version: 1.19
+depend:
+  - RivalsAPI
+  - ViaVersion
+  - SlimeWorldManager
+  - RivalsIslands

@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'hu.rivalsnetwork.rivalsprofiles'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        name = 'PaperMC'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+
+    maven {
+        name = 'JitPack'
+        url = 'https://jitpack.io'
+    }
+
+    maven {
+        name = 'AdvancedSlimeWorldManager'
+        url = 'https://repo.infernalsuite.com/repository/maven-snapshots/'
+    }
+
+    maven {
+        name = 'AdvancedSlimeWorldManagerv2'
+        url = 'https://repo.rapture.pw/repository/maven-releases/'
+    }
+}
+
+dependencies {
+    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+    compileOnly("com.infernalsuite.aswm:api:1.19.4-R0.1-SNAPSHOT")
+    compileOnly files("libs/RivalsAPI-1.0-SNAPSHOT.jar")
+}
+
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
