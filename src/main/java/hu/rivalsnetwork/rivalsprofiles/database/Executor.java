@@ -23,17 +23,20 @@ public class Executor {
             FindIterable<Document> cursor = collection.find(searchQuery);
             try (final MongoCursor<Document> cursorIterator = cursor.cursor()) {
                 if (cursorIterator.hasNext()) {
-                    Document newDocument = new Document();
-                    InventorySerializer.serialize(player.getInventory(), value -> {
-                        newDocument.put("contents", value);
-                        newDocument.put("xp", player.getExp());
-                        newDocument.put("level", player.getLevel());
-                        Document updateObject = new Document();
-                        updateObject.put("$set", newDocument);
+                    while (cursorIterator.hasNext()) {
+                        if (!cursorIterator.next().getString("profile").equals(getCurrentIsland(player))) continue;
+                        Document newDocument = new Document();
+                        InventorySerializer.serialize(player.getInventory(), value -> {
+                            newDocument.put("contents", value);
+                            newDocument.put("xp", player.getExp());
+                            newDocument.put("level", player.getLevel());
+                            Document updateObject = new Document();
+                            updateObject.put("$set", newDocument);
 
-                        collection.updateMany(searchQuery, updateObject);
-                    });
+                            collection.updateMany(searchQuery, updateObject);
+                        });
 
+                    }
                 } else {
                     InventorySerializer.serialize(player.getInventory(), value -> {
                         document.put("contents", value);
@@ -70,6 +73,7 @@ public class Executor {
             MongoCollection<Document> collection = database.getCollection("inventory-data");
             Document searchQuery = new Document();
             searchQuery.put("uuid", player.getUniqueId());
+            searchQuery.put("profile", getCurrentIsland(player));
             FindIterable<Document> cursor = collection.find(searchQuery);
 
             try (final MongoCursor<Document> cursorIterator = cursor.cursor()) {
