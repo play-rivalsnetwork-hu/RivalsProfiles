@@ -8,6 +8,7 @@ import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,11 +55,12 @@ public class JumpPad {
             final float[] position = {0};
 
             Location loc = event.getPlayer().getLocation().clone();
-            ArmorStand ent = (ArmorStand) event.getPlayer().getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
-            ent.setInvisible(true);
-            ent.setInvulnerable(true);
-            ent.setCanTick(false);
-            ent.addPassenger(event.getPlayer());
+            ArmorStand ent = (ArmorStand) event.getPlayer().getWorld().spawnEntity(loc, EntityType.ARMOR_STAND, CreatureSpawnEvent.SpawnReason.CUSTOM, entity -> {
+                entity.setInvulnerable(true);
+                ((ArmorStand) entity).setInvisible(true);
+                ((ArmorStand) entity).setCanTick(false);
+                entity.addPassenger(event.getPlayer());
+            });
             riding.add(event.getPlayer());
             Location location = loc.clone();
             event.getPlayer().playSound(event.getPlayer(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 2.0f);
