@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// Thank you! https://www.spigotmc.org/threads/hypixel-portals.453338/#post-4288417
 public class JumpPad {
     public static final List<Player> riding = new ArrayList<>(2048);
     private final int maxX;
@@ -84,7 +84,7 @@ public class JumpPad {
     }
 
     // https://www.geeksforgeeks.org/how-to-create-bezier-curve-animation-using-java-applet/
-    public static double cubicBezier(double t, int[] math) {
+    public static double cubicBezier(double t, @NotNull int[] math) {
         return Math.pow(1 - t, 3) * math[0] + 3 * t * Math.pow(1 - t, 2) * math[1] + 3 * t * t * (1 - t) * math[2]
                 + Math.pow(t, 3) * math[3];
     }
